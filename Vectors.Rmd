@@ -1,0 +1,166 @@
+---
+title: "Vectors"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# **Vectors definition**
+
+A vector is an order of data points of the same type. These constituents of a vector are called components.
+
+
+The following code shows a vector with three elements. Elements in this vector are all numerical.
+
+
+```{r }
+x <- c(12, 23, 45)
+x
+```
+
+
+As a fact, a vector can also contain character type elements. The following code shows a vector with five character names as elements of a vector.
+
+```{r }
+y <- c('Frank', 'Daniel', 'Peter', 'Sandra', 'Stella')
+y
+```
+We can find the length of a vector using the length function as demonstrated in the following code. The length function returns the number of character elements in a vector. For example, the following code returns the number of character elements from vector y.
+```{r }
+y <- c('Frank', 'Daniel', 'Peter', 'Sandra', 'Stella')
+length(y)
+```
+
+Another function that needs mention is the sum function. When applied to a numeric vector, it returns the sum of all elements in it. The following code returns the sum of all elements in the numeric vector.
+```{r }
+z <- c(2, 4, 5, 6, 7)
+sum(z)
+```
+
+Sometimes we might want to find the average of all elements in a vector. This can be achieved by applying the mean function as given in the following instance. Here, the code returns the average of all elements from the previous vector.
+```{r }
+z <- c(2, 4, 5, 6, 7)
+mean(z)
+```
+
+Another concept that should be noted is missing value in a vector. The is.na() function returns a missing TRUE statement in the position where a missing NA exist as demonstrated with the following code. The is.na() function returns FALSE values for all non missing element except for missing value where its returns the TRUE value.
+```{r }
+v <- c(2, NA, 5, 6, 7)
+is.na(v)
+```
+
+\newpage
+## *Vector Addition*
+R is a functional programming. For example this code is equal to 5
+
+```{r numerical}
+"+"(2,3)
+```
+
+Vectors can be added element wise. For example, the following code shows how two vectors are added together. Each element in a specific position from the first vector is added to element in the second vector in the same position.
+```{r }
+c(2, 3, 4) + c(5, 2, 3)
+```
+
+
+## *Vector Subtraction*
+
+Just like in adding two vectors together, it is possible to subtract two vectors element wise. The following example demonstrates this. 
+```{r }
+c(5, 3, 4) + c(5, 2, 3)
+```
+
+## *Vector Multiplication*
+
+Just like in vector subtraction, vector multiplication is done element wise. From the code that follows, we see that elements are multiplied position by position.
+```{r }
+c(5, 3, 4) * c(5, 2, 3)
+```
+
+## *Vector Division*
+
+Likewise, this is also done element wise using the division symbol "/". This code returns division of element of second vector from the first vector done element wise.
+```{r }
+c(8, 12, 15) / c(2, 3, 3)
+```
+
+## *Vector Modulus*
+
+Vector modulus is done element wise from one vector to another vector. The following example demonstrates this in action. This return the remainder when each element from the second vector divides each element from the first vector element wise.
+```{r }
+c(5, 3, 4) %% c(5, 2, 3)
+```
+
+
+## *Vector exponential*
+It is possible to raise each element from the first vector to the power of second element using the exponential symbol "**". An example is shown below.
+```{r }
+c(5, 3, 4) ** c(5, 2, 3)
+```
+
+# **Vector Indexing**
+
+Sometimes, we might want to access part of a vector or access a particular element of a vector. This type of action is called vector indexing and it is accomplished with a squared bracket []. Unlike python whose indexing start from 0, vector indexing in R starts from 1. 
+The following code demonstrates vector indexing using a square bracket. The first code index a single element from a vector reference by variable u. The second example access element from position position 1 through 3. The final example shows an index of an element position wise.
+```{r }
+u <- c(2, 3, 4, 5, 7, 8)
+u[2]  #This index a single element from a vector
+u[c(1:3)]  #This index element from position 1 to 3
+u[c(2, 5, 6)] #This reference individual position
+```
+
+
+Negative indexing is use to exclude an element from a vector at a given position. In the code that follows, using the previous example, its returns all elements except 2. The second example exclude elements at index 2 and 6.
+```{r }
+u <- c(2, 3, 4, 5, 7, 8)
+u[-1]  #This exclude element at index 1 only
+u[-c(2, 6)] #Exclude elements at index 2 and 6
+```
+
+
+Duplicate indexing returns the same element that was index. The code example returns 4 at index 3 for duplicate indexing.
+```{r }
+u <- c(2, 3, 4, 5, 7, 8)
+u[c(3, 3)]
+```
+
+
+## *Logical Indexing*
+
+Logical statements returns a vector of TRUE or FALSE for each element tested against certain condition. An example is shown below. The first line of code returns a vector of TRUE where each element tested is equal to two and returns FALSE otherwise. The second code returns subset of all elements equal to 2.
+```{r }
+v <- c(2, 2, 4, 2, 7, 8)
+v == 2   #This returns a vector of TRUE and FALSE
+v[v==2]  #Subset all elements equal to 2
+```
+
+\newpage
+# **Generating vector: the sequence way**
+
+The seq(from, to, by) function can be used to create a vector of sequence with argument "from" specifying the beginning of the vector and argument "to" the end of the vector and it is order by the "by" argument. The following code demonstrates the usefulness of this function. The first code generates a sequence of number from 1 to 20 and the second code generates a sequence of number from 1 through 20 order by 2.
+```{r }
+seq(1, 20) #Generate vector from 1 to 20
+seq(from = 1, to = 20,by =  2) 
+```
+
+Furthermore, it is possible to repeat element of a vector using the rep() function. The rep() function is represented by rep(x, times = 1, length.out = NA, each = 1) where x is a vector of any mode including a list, times is an integer value vector given the number of times a vector should repeat if it is a length(x) or a vector of length 1.
+
+The following examples show how rep() function is applied to generate repetition of vector of length 1 or of length more than 1. The first code generates a repetition of element 3 four times.The second code repeat each element in the vector four times. The last code repeat each sequence of element three times 3.
+
+```{r }
+#The call form is rep(x, times)
+x <- rep(3, 4)
+
+#Repeat vector elements four times
+rep(c(2, 3, 4), 4)
+
+#Repeat a sequence of number three times.
+rep(2:6, 3)
+```
