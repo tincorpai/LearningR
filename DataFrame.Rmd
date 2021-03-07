@@ -83,12 +83,11 @@ dimnames(employees_info)
 
 Just like the way we add row names to each row, we could change column's names to another name using colnames() function like the following example:
 ```{r}
-colnames(employees_info) <- c("employee_names", "employee_age", "employee_salaries")
+colnames(employees_info) <- c("employee_names", "employee_age", "employee_salaries", "employee_profession")
 employees_info
 ```
 
 
-\newpage
 
 ## Indexing Data Frames
 Elements in data frames are selected using data frame's indexing. For instance, we could select the 
@@ -103,7 +102,7 @@ employees_info[[1]][1:3]
 ```
 
 
-# cbind() and rbind() with data frame.
+## cbind() and rbind() with data frame.
 
 The meaning of cbind() is column bind. cbind() function is used to combine vectors, matrices, and data frames by columns. As case in point, the code that follows applied cbind() function to combine data_info with v3 vector by column to form a data frame.
 ```{r}
@@ -120,6 +119,7 @@ v3 <- c(12.23, 22.20,  30.30)
 cbind(data_info, v3)
 ```
 
+\newpage
 In the same vein, the name rbind means row-bind. The rbind() function can be used to combine vectors, matrices and/or data frames by row. However, caution must be observed when applying rbind() function for combination because this can cause changes in the columns classes if not handle properly. For instance, if we were to combine the data_info with v3, this will change all column class to a float class. In order to avoid this, we will not be using a vector but rather a data frame in this form:
 ```{r}
 df <- data.frame(col1 = 4,
@@ -129,9 +129,4 @@ rbind(data_info, df)
 ```
 
 
-# Adding Attibutes to Data Frames
-
-```{r}
-
-```
 
