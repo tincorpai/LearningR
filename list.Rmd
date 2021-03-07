@@ -1,0 +1,227 @@
+---
+title: "List"
+author: "Taiwo Famuyiwa"
+output:
+  word_document: default
+  html_document:
+    df_print: paged
+  pdf_document: default
+---
+
+
+```{r, include=FALSE}
+library(knitr)
+opts_chunk$set(tidy.opts=list(width.cutoff=60),tidy=TRUE, comment = NA)
+```
+
+
+\begin{center}
+How to create a List in R
+\end{center}
+
+A list is a vector where each element can be of a 
+different type. Lists are created with the list function. List contents are created, with each argument separated by a comma. List elements can be any variable type - vectors, matrices etc. 
+
+In the following example, a list called list_data is created. There are three elements in the list, each one with different data type, these are: list, vector and a matrix.
+```{r collapse=TRUE}
+(list_data = list(c(1, 2, 3, 4), c("taiwo", "bunmi", "wunmi", "Funmi"), matrix(c(1, 2, 3, 4), nrow = 2)))
+```
+
+
+## Naming Each element of a List
+Like vectors, it is possible to give name to each element of a list during the construction, or afterward using the names function.In the example that follows, name was given to each element in the list, using the name function. 
+```{r collapse=TRUE}
+list1_element <- list(c("Monday", "Tuesday", "Wednesday"), c("January", "February", "March"), c(2001, 2002, 2003))
+names(list1_element) <- c("Days", "Month", "year")
+list1_element
+```
+
+
+\newpage
+## Nested List
+Lists can be nested. The following example demonstrates this. Here, two lists were nested within a list
+using the list function.
+```{r collapse=TRUE}
+(account_list <- list(
+  sales_product = list(product = c("butter", "bread", "beans"), sales = c("$20", "$30", "$40")),  cost_produce = 
+    list(product = c("butter", "bread", "beans"),
+         cost = c("$10", "$20", "$300"))
+))
+```
+
+## Atomic and Recursive Variables
+
+A  list is called recursive variable because it contains other list within itself. While vectors, matrices and arrays are atomic, a list stands out from the rest because it is recursive variable.
+In the following examples, it shows that a list is recursive not atomic. 
+
+```{r collapse=TRUE}
+is.atomic(list())
+is.recursive(list())
+is.atomic(c(1, 2, 3, 4))
+is.recursive(c(1, 2, 3, 4))
+```
+
+## List Dimensions and Aritmetic
+
+A list have length. A list length is the number of 
+top level elements that it contains.
+
+```{r collapse=TRUE}
+list_data = list(c(1, 2, 3, 4), c("taiwo", "bunmi", "wunmi", "Funmi"), 
+                  matrix(c(1, 2, 3, 4), nrow = 2))
+
+length(list_data)
+```
+
+
+\newpage
+## Accessing List Elements
+There are three ways to access the element of a list and they are as follows:
+
+*  Access the element of a list by its element's name e.g list_1$c
+*  Access the element of a list by its element's name inside a bracket. e.g list_1[[c]]
+*  Access the element index i of the element within a list. e.g list_2[[i]]
+
+Furthermore, we could access the element of a list using a single bracket.
+For instance, list_2["c"] and list_2[i]. Both double bracket and single bracket 
+access elements in vector-index fashion. The only difference is while single 
+bracket index return a list - sublist of the original, double bracket return 
+element in terms of a vector. The following code demonstrates the importance 
+of this illustration. The first and the third examples return a vector while the
+second return a vector. Also, the fourth example return a matrix. 
+```{r collapse=TRUE}
+list_data = list(c(1, 2, 3, 4), c("taiwo", "bunmi", "wunmi", "Funmi"), 
+                  matrix(c(1, 2, 3, 4), nrow = 2))
+names(list_data) <- c("vector", "number", "matrix")
+list_data[["vector"]] #Return a vector 
+list_data["vector"] #Return a list
+list_data[[2]]  #This will return the second element of a list by indexing using a number 
+list_data$matrix  #Index element of a list by name
+```
+
+
+## Adding and Deleting List Elements 
+
+It is possible to add an element to a list after it has been created.The 
+following example demonstrates that. For example the, the second indexing sees 26 
+added to the list using the index method. Also, multiple elements can also be
+added to the list using multiple indexing. In the last example, the last element
+of a list is removed using the NULL statement.
+```{r collapse=TRUE}
+z <- list(a = "abc", b = 12)
+#To add element to a list, do the following
+z$c <- "He was there yesterday"
+#Adding element to a list can also be done via a vector index 
+z[[4]] <- 26
+#It is also possible to add multiple elements at the same time to a list
+z[5:7] <- c(12, 33, 44)
+#The following code delete an element from a list.
+z$c <- NULL
+```
+
+
+\newpage
+## Converting Between Vectors and Lists
+
+One of the advantages of R language is that it is possible to convert a vector
+to a list. This can be achieved by applying the as.list() function. This creates
+a list with each element of the vector mapping to a list element containing one 
+value. 
+```{r collapse=TRUE}
+vector_one <- c(2, 3, 4, 5, 6)
+as.list(vector_one)
+```
+
+
+It is possible to revert the operation by converting the list to a vector
+using as.numeric() function respectively. In the example that follows, the list 
+that was created in the previous example is converted to a numeric vector using
+the as.numeric() function.
+```{r collapse=TRUE}
+as.numeric(vector_one)
+```
+
+Additionally, the unlist() function can be use to convert a list to  a vector.
+For instance, in the following code, unlist() function transform a list to a 
+vector.
+```{r collapse=TRUE}
+list_one <- list(x = 12, y=23, z=24)
+unlist(list_one)
+```
+
+## Combining Lists
+
+Just like the way the c function was used to concatenate vectors, it can be use
+to concatenate two or more lists. In the example that follows, the c function 
+concatenate two lists.
+```{r collapse=TRUE}
+c(list(x = 3, y = 4, z = 5), list(7))
+```
+
+In addition,the c function can be use to concatenate a list and a vector 
+together. This will convert the vector to a list.
+```{r collapse=TRUE}
+c(list(x = 3, y = 4), 3)
+```
+
+
+## Applying Functions to Lists
+We could apply lapply() and sapply() functions to lists. It is possible to call
+lapply() function on each component of a list and returns a list.
+The following example elucidate this method. Here, R applied median() to 1:6 and
+20:40, returning a list of median number for each component of a list.
+```{r collapse=TRUE}
+lapply(list(1:6, 20:40), median)
+```
+
+sapply() is different from lapply() because it returns a vector instead of 
+a list. For instance, apply sapply() function to the previous example returns 
+the vector of numbers instead of a list.
+```{r collapse=TRUE}
+sapply(list(1:6, 20:40), median)
+```
+
+## NULL 
+
+Another important special value that must be mentioned is empty variable.
+This type of special number is prominent while working with list, data frames or 
+during function arguments (we shall be talking about in subsequent topic).
+
+For instance, while creating a list, it is possible to create an element without 
+contents. A NULL special number can be used to do that. For instance, the 
+following list income per cities in some states in the year 2000. 
+Here we specify that some cities have an income while others do not.
+```{r collapse=TRUE}
+(profit_cities <- list(
+  Texas = "one million dollars", 
+  dallas = "two million dollars", 
+  little_rock = NULL, 
+  new_york = NULL
+  ))
+```
+
+\newpage
+It is important to understand the difference between NULL and special missing
+value NA. The biggest difference is that NA is a scalar value, whereas NULL 
+takes up no space at all - that is length zero. For instance, using length() 
+function, the length of NA is 1 while the length of NULL is 0. Also, to test
+for NULL, apply is.null() function. This will return a logical statement.
+```{r collapse=TRUE}
+#The length NULL is 0
+length(NULL)
+
+#The length of NA is 1 
+length(NA)
+
+#Apply is.null()
+is.null(NULL)
+```
+
+Furthermore, NULL statement can be used to remove elements of a list. Setting an
+element to NULL will remove it. For instance, using the previous examples
+we could set texas element to NULL. This will remove the element from the list.
+```{r collapse=TRUE}
+profit_cities$Texas <- NULL
+profit_cities
+```
+
