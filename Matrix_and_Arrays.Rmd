@@ -1,8 +1,7 @@
 ---
-title: "Matrix and Array"
+title: "Matrix and List"
 author: "Taiwo Famuyiwa"
 output:
-  pdf_document: default
   html_document:
     df_print: paged
 ---
@@ -168,7 +167,7 @@ diag(matrix_one)
 
 \newpage
 ## *Apply cbind() and rbind()*
-Two matrices can be combined together to form a single column matrix or a row matrix. Apply the cbind() function to combine two of more vectors or matrices as columns. Also, the rbind() function combine two or more vectors or matrices as rows. From the first output, two matrices are combined together as a column using the cbind() function. Also, the rbind() function was combined as a row to form a matrix.
+Two matrices can be combined together to form a single column matrix or a row matrix. Apply the cbind() function to combine two of more vectors or matrices as columns. Also, the rbind() function combine two or vectors or matrices as vectors. From the first output, two matrices are combined together as a column using the cbind() function. Also, the rbind() function was combined as a row for form a matrix.
 ```{r}
 #Create two matrices 
 matrix_one <- matrix(seq(3, 19, by = 2), nrow = 3)
@@ -200,13 +199,13 @@ An array is created with the array(data = NA, dim = length(data), dimnames = NUL
 
 * dimnames - These are dimension names or in simply term, it is called variable or features of an array.
 
-For the following example, two different vectors of different lengths were created and they were called into the array function to create a 3 by 3 matrix in two dimensions.
+For the following example, two different vectors of different lengths were created and they were called them into the array function to create a 3 by 3 matrix in two dimensions.
 ```{r}
 #Create two different vectors and each having different length
 vector_one <- c(7, 9, 10)
 vector_two <- c(3, 6, 7, 12, 13, 16)
 
-#Then make this vector to be an input in  array function.
+#Then make this vector to be an input in  array #function.
 result <- array(c(vector_one, vector_two), dim = c(3, 3, 2))
 result
 ```
@@ -214,8 +213,8 @@ result
 
 ## *Naming columns and rows of an array*
 
-Name each row, column and matrix created from the previous code and this done with the "dimnames" arguments in the array function.
-In addition to the two vectors created from earlier, we shall create column, row and matrix names and to this, we use "dimnames" arguments as shown with the following codes.
+Name rows, columns and give name to each matrix created from the previous code and this done with the "dimnames" arguments in the array function.
+In addition to the two vectors created from the earlier, we shall create column, row and matrix names and then call the "dimnames" arguments as shown with the following codes
 ```{r}
 #Create a vectors, row name, column names and #matrices name.
 vector_one <- c(7, 9, 10)
@@ -228,55 +227,9 @@ result <- array(c(vector_one, vector_two), dim = c(3, 3, 2), dimnames = list(row
 
 result 
 ```
+
 
 ## *Indexing Array Elements*
 
-Indexing in R is done in three dimensions using the following array[i, j, k] method where "i" stands for row indexing, "j" stands for column indexing, and "k" stands for the matrix that will be index.
-We shall use the previous example to illustrate the array indexing. The first output gives second row of the second matrix. The second indexing returns element at the first row, third column for the first matrix. The last indexing returns the second matrix.
-```{r}
-#Create a vectors, row name, column names and #matrices name.
-vector_one <- c(7, 9, 10)
-vector_two <- c(3, 6, 7, 12, 13, 16)
-column_names <- c("col1", "col2", "col3") 
-row_names <- c("row1", "row2", "row3")
-matrix_names <- c("matrix_one", "matrix_two")
+Array indexing is done in three dimensions using the following method array[i, j, k]. "i" stands for row indexing, "j" stands for column indexing and "k" stands for the matrix that will be index in the array.
 
-result <- array(c(vector_one, vector_two), dim = c(3, 3, 2), dimnames = list(row_names, column_names,  matrix_names))
-
-#Output the first row of the second matrix
-result[1,,2]
-
-#Output the element at first row, third column at the first matrix
-result[1, 3, 1]
-
-#Output the second matrix
-result[,,2]
-```
-
-
-\newpage
-## *Arithmetic Operation Across Array Elements*
-
-It is possible to do arithmetic calculation across the elements in an array using the apply() function. The syntax is apply(x, margin, fun)
-
- * x - Stands for an array or matrix of elements
- 
- * Margin - This take a value 1 or 2 to specify to apply the function. If margin = 1, means apply the function to the row. If the margin = 2, means apply the function to the column.
- 
- * Fun - Tells which function to apply. We could apply mean, max, sum or even user defined function.
-```{r}
-#Create a vectors, row name, column names and #matrices name.
-vector_one <- c(7, 9, 10)
-vector_two <- c(3, 6, 7, 12, 13, 16)
-column_names <- c("col1", "col2", "col3") 
-row_names <- c("row1", "row2", "row3")
-matrix_names <- c("matrix_one", "matrix_two")
-
-result <- array(c(vector_one, vector_two), dim = c(3, 3, 2), dimnames = list(row_names, column_names,  matrix_names))
-
-result 
-
-#Use apply function to calculate the sum of the rows across all the matrices.
-array_arith <- apply(result, c(1), sum)
-array_arith
-```
