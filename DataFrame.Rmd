@@ -69,7 +69,7 @@ rownames() function to data frame. For example, Using the employees_info earlier
 rownames(employees_info)
 ```
 
-Also, we can use rownames() function to change add row names. For example, we can add row names to employee_info using the following method
+Also, we can use rownames() function to change add row names. For example, we add row names to employee_info using the following method
 ```{r}
 rownames(employees_info) <- c("row1", "row2", "row3", "row4", "row5")
 employees_info
