@@ -69,10 +69,22 @@ rownames() function to data frame. For example, Using the employees_info earlier
 rownames(employees_info)
 ```
 
+Also, we can use rownames() function to change add row names. For example, we can add row names to employee_info using the following method
+```{r}
+rownames(employees_info) <- c("row1", "row2", "row3", "row4", "row5")
+employees_info
+```
+
 Furthermore, colnames() function can be applied to any data frame to return name of each variable. Accordingly, the following code returns variable names for each column in the employee_info data frame. Also, we could use dimnames() function as well.
 ```{r}
 colnames(employees_info)
 dimnames(employees_info)
+```
+
+Just like the way we add row names to each row, we could change column's names to another name using colnames() function like the following example:
+```{r}
+colnames(employees_info) <- c("employee_names", "employee_age", "employee_salaries")
+employees_info
 ```
 
 
