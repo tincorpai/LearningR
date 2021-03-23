@@ -1,0 +1,147 @@
+---
+title: "FACTORS"
+author: "Taiwo"
+date: "3/10/2021"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r, include=FALSE}
+library(knitr)
+opts_chunk$set(tidy.opts=list(width.cutoff=60),tidy=TRUE, comment = NA)
+```
+
+
+# WHAT IS FACTOR AND HOW IS IT CREATED IN R
+
+Basically, factor in R is a variable used to categorize and store data. Most often, it is used to represent categorical variables that stores both integers and strings data values as levels.
+
+Also, it is possible to create a factor as a vector but with an additional information. The supplementary information consists of records of distinct values in that vector, called levels.
+
+The following example further illustrates how a factor is created using vector and a factor() function.
+```{r collapse=TRUE}
+#A vector of integers with unique values 
+x <- c(5, 12, 13, 12, 5) 
+#Return a unique values called levels
+xf <- factor(x)
+xf
+```
+
+With this simple example, we could see that the distinct values in xf are 5, 12 and 13 respectively.
+In addition, these unique values are called levels.
+
+Taking a look at the structure of the xf object, it is a factor object with three levels.
+```{r collapse=TRUE}
+str(xf)
+```
+
+The length of a factor is equivalent to the length of the vector that creates it and it is `r length(xf)`.
+
+
+In the same vein, we can anticipate the future levels of a factor, as seen here:
+```{r collapse=TRUE}
+x <- c(5, 12, 13, 12)
+xff <- factor(x, levels = c(5, 12, 13, 88))
+xff
+xff[2] <- 88
+xff
+```
+ 
+We can see that xff object does not contain value 88 at the first instance, defining it, we allow for the future possibility.
+
+
+# COMMON FUNCTIONS USED WITH FACTORS
+
+There are four functions that are synonymous with factor in R and they are: tapply(), split() and by() function respectively. We shall be illustrating each of them one by one
+
+## The tapply() function
+
+Suppose we have a vector that contains the ages of six voters and another vector that contains their political affiliation (Democrat, Republican and Unaffiliated). If we want to find the mean ages in x within each of the party clusters, then it is possible to apply tapply() function to achieve this purpose. 
+
+In the normal usage, the call tapply(x, y, z) has x has a vector, f as a factor or list and z as a function. Also, it is possible to group by two factors or more, for instance say you want to group by party and gender, then x will contain two factors; party and gender respectively.
+
+The operation performed by tapply() function is to temporarily split x into clusters or groups, each group corresponding  to level of factor and then apply z() function to the resulting subvectors of x. Here is an example to illustrates the idea:
+
+```{r collapse=TRUE}
+voter_ages <- c(30, 25, 36, 45, 59, 70)
+political_afil <- c('R', 'D', 'D', 'R', 'D', 'U')
+tapply(voter_ages, political_afil, mean)
+```
+
+Furthermore, this second example shows how voters ages are group by political affiliation and gender. For example, we have the following example expatiates this point:
+```{r collapse=TRUE}
+voter_ages <- c(30, 25, 36, 45, 59, 70)
+voter_gender <- c('f', 'm', 'm', 'f', 'f', 'm')
+political_afil <- c('R', 'D', 'D', 'R', 'D', 'R')
+y <- data.frame(voter_gender, political_afil)
+tapply(voter_ages, y, mean)
+```
+
+
+The result shows the mean age of voters according to their political affiliation. Also, as regards to political affiliation, female voters from democratic party has the highest mean age but referring to overall mean age, the male mean age is higher than the female mean age.
+
+## The Split() Function
+
+The split() function is opposite to the tapply() function in the sense that its splits a vector into groups and apply a specified function on each group.
+
+The main form of the split function is split(x, f) where x stands vector of data frame and f is a factor or a list of factors. For instance, let's say we create a data frame (income_info) with four variables: gender, age, income and over25 income such as:
+
+```{r collapse=TRUE}
+#Create a data frame with four variables
+income_info <- data.frame(
+  gender = c('M', 'F', 'M', 'F', 'M', 'F'),
+  age = c(20, 30, 22, 50, 23, 55),
+  income = c(70000, 80000, 60000, 40000, 23000, 120000)
+)
+#Create a categorical variable that returns one for #each age greater than 25 and 0 other wise.
+income_info$over25 <- ifelse(income_info$age > 25, 1, 0)
+income_info
+```
+
+What follows now is to split income variable by the two categorical variables, gender and over25 as follows:
+
+```{r collapse=TRUE}
+split(income_info$income, list(income_info$gender, income_info$over25))
+```
+
+The outcome of the split function is a list whose components is denoted by a dollar sign. 
+
+
+## by() function
+
+The by() function is an object-oriented wrapper for tapply() applied to data frames. The function argument is by(data, INDICES, FUN, …, simplify = TRUE).
+
+The Abalone data set is about predicting the age of abalone from physical measurement. The data set contains four thousand and one hundred and seventy seven observations with nine variables respectively. Click this: [abalone](https://archive.ics.uci.edu/ml/datasets/abalone) to gain access to the data set.
+
+\newpage
+At first, import the data with read.csv() like this:
+```{r collapse=TRUE}
+abalone <- read.csv(file = 'abalone.csv', header = TRUE)
+
+head(abalone)
+```
+
+Thereafter, we can call the by() function here. Its works like tapply() but it is applied to objects rather than vectors. Since the input data set is a data frame not a vector, we can call the by() function to perform prediction operation we are looking for.
+
+```{r collapse=TRUE}
+by(abalone, abalone$Sex, function(m) lm(m[, 2]~m[, 3]))
+```
+
+We could see from the output that the defined function regresses the second column of the data frame argument m against the third column. Also, the function was called three times - one for each level of sex variable - thus producing the three regression analysis.
+
+
+\newpage
+# Working with Tables
+
+A contingency table is a tabulation of counts and/or percentages for one or more variables. In R, table can be created by the table() function. The table function is mostly use to count the number of unique values or levels of a categorical variable. 
+
+To use the table() function with data frame, reference the specific variable such as data frame$variable. For instance, to get the number of unique level of the sex variable in the Abalone dataframe, do the following:
+```{r collapse=TRUE}
+table(abalone$Sex)
+```
+
+
+
+
+
